@@ -43,17 +43,31 @@ ex_2()
 # Ex 3
 # Write a script that receives two strings and prints the number of occurrences of the first string in the second.
 
-
 def ex_3():
     print("Ex 3")
-    string1 = input("Enter the first string: ")
-    string2 = input("Enter the second string: ")
+    substring = input("Enter the first string: ")
+    entire_string = input("Enter the second string: ")
 
-    # The count() method returns the number of times a specified value appears in the string.
-    occurrences = string2.count(string1)
+    occurrences = 0
 
-    print("Number of occurrences of the first string in the second string:", occurrences)
-
+    if len(substring) < len(entire_string):
+        for idx, i in enumerate(entire_string):
+            if len(substring) <= len(entire_string)-idx:
+                if entire_string[idx] == substring[0]:
+                    j = 1
+                    ok = 1
+                    while j < len(substring)-1:
+                        if substring[j] != entire_string[idx+j]:
+                            ok = 0
+                            break
+                        j += 1
+                    if ok == 1:
+                        # print(i)
+                        # print(idx)
+                        occurrences += 1
+        print("Number of occurrences of the first string in the second string:", occurrences)
+    else:
+        print("The first string should be shorter than the second")
 
 ex_3()
 
@@ -230,6 +244,7 @@ ex_9()
 
 
 def ex_10():
+    print("Ex 10")
     input_string = input("Introduce a text: ")
     words = input_string.split(" ")
     word_count = len(words)
