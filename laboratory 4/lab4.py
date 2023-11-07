@@ -1,3 +1,5 @@
+import copy
+
 # 1.
 # Write a Python class that simulates a Stack. The class should implement methods like push, pop, peek (the last two
 # methods should return None if no element is present in the stack).
@@ -7,7 +9,8 @@ class Stack:
         self.elements = []
 
     def push(self, element):
-        self.elements.append(element)
+        copy_of_element = copy.deepcopy(element)
+        self.elements.append(copy_of_element)
 
     def pop(self):
         if len(self.elements) > 0:
@@ -20,9 +23,14 @@ class Stack:
     # peek - The element retrieved does not get deleted or removed from the Stack.
     def peek(self):
         if len(self.elements) > 0:
-            return self.elements[-1]
+            copy_of_element = copy.deepcopy(self.elements[-1])
+            return copy_of_element
         else:
             return None
+
+    def is_empty(self):
+        if len(self.elements) == 0:
+            return True
 
     def __str__(self):
         return f"\nMy stack: {self.elements} \nStack size: {len(self.elements)}"
@@ -31,18 +39,27 @@ class Stack:
 my_Stack = Stack()
 my_Stack.push(1)
 my_Stack.push(2)
-my_Stack.push(3)
+my_Stack.push(None)
 
 print("-----Ex 1-----")
 print(my_Stack)
 print("Peek:", my_Stack.peek())
+if my_Stack.is_empty():
+    print("Stack is empty")
+else:
+    print("Stack is not empty")
 print("Pop:", my_Stack.pop())
 print("Peek:", my_Stack.peek())
 print("Pop:", my_Stack.pop())
 print("Peek:", my_Stack.peek())
 print("Pop:", my_Stack.pop())
 print("Peek:", my_Stack.peek())
+if my_Stack.is_empty():
+    print("Stack is empty")
+else:
+    print("Stack is not empty")
 print("Pop:", my_Stack.pop())
+
 
 # 2. Write a Python class that simulates a Queue. The class should implement methods like push, pop, peek (the last
 # two methods should return None if no element is present in the queue).
@@ -53,7 +70,8 @@ class Queue:
         self.elements = []
 
     def push(self, element):
-        self.elements.append(element)
+        copy_of_element = copy.deepcopy(element)
+        self.elements.append(copy_of_element)
 
     def pop(self):
         if len(self.elements) > 0:
@@ -66,9 +84,14 @@ class Queue:
     # peek - The element retrieved does not get deleted or removed from the Queue.
     def peek(self):
         if len(self.elements) > 0:
-            return self.elements[0]
+            copy_of_element = copy.deepcopy(self.elements[0])
+            return copy_of_element
         else:
             return None
+
+    def is_empty(self):
+        if len(self.elements) == 0:
+            return True
 
     def __str__(self):
         return f"\nMy queue: {self.elements} \nQueue size: {len(self.elements)}"
@@ -89,6 +112,7 @@ print("Peek:", my_Queue.peek())
 print("Pop:", my_Queue.pop())
 print("Peek:", my_Queue.peek())
 print("Pop:", my_Queue.pop())
+
 
 # 3. Write a Python class that simulates a matrix of size NxM, with N and M provided at initialization. The class
 # should provide methods to access elements (get and set methods) and some mathematical functions such as transpose,
@@ -142,7 +166,12 @@ class Matrix:
     def apply_transformation(self, transformation_function):
         for i in range(self.n):
             for j in range(self.m):
-                self.matrix[i][j] = transformation_function(self.matrix[i][j])
+                value = self.matrix[i][j]
+                try:
+                    transformed_value = transformation_function(value)
+                    self.matrix[i][j] = transformed_value
+                except Exception as e:
+                    print("An error occurred while applying transformation")
 
     def __str__(self):
         matrix_str = ""
@@ -203,6 +232,3 @@ print("Matrix Multiplication Result:")
 result = Matrix(len(multiplication_result), len(multiplication_result[0]))
 result.matrix = multiplication_result
 print(result)
-
-
-
